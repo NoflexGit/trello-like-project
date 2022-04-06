@@ -14,12 +14,19 @@ const Button: React.FC<IProps> = ({
   size = "medium",
   children,
   className,
+  disabled,
   ...restProps
 }) => {
-  const classes = cx(styles.button, styles[view], styles[size], className);
+  const classes = cx(
+    styles.button,
+    styles[view],
+    styles[size],
+    disabled && styles.disabled,
+    className
+  );
 
   return (
-    <button className={classes} type={type} {...restProps}>
+    <button className={classes} type={type} disabled={disabled} {...restProps}>
       {children}
     </button>
   );

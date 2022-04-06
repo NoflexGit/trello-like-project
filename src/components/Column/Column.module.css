@@ -1,0 +1,61 @@
+.column {
+  position: relative;
+  flex: 0 0 250px;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.title {
+  padding-right: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.toggleEdit {
+  display: none;
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  top: -3px;
+  right: 0;
+  z-index: 9;
+}
+
+.column:hover .toggleEdit {
+  display: block;
+}
+
+.contentWrapper {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.content {
+  background-color: #e4ecf3;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+}
+
+.card {
+  margin-bottom: 15px;
+}
+
+.card:last-of-type {
+  margin-bottom: 0;
+}
+
+.addButton {
+  margin-bottom: 10px;
+}
+
+.addNewCardInput {
+  margin-bottom: 20px;
+}

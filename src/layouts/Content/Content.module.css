@@ -1,0 +1,41 @@
+.content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.columns {
+  padding: 0 20px;
+  position: relative;
+  flex: 1 1 auto;
+  margin-top: 30px;
+}
+
+.newColumn {
+  flex: 0 0 250px;
+  max-width: 250px;
+}
+
+.title {
+  padding: 18px 0 18px 20px;
+  font-size: 30px;
+  border-bottom: 1px #d5dde3 solid;
+  line-height: 1;
+}
+
+.columnsWrapper {
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 0 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.column {
+  margin-right: 20px;
+}

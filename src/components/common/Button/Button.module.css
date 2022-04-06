@@ -63,3 +63,9 @@
 .transparent:active {
   border-color: #c1c8cb;
 }
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #bbc1c7;
+}

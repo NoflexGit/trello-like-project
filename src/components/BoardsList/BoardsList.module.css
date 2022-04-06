@@ -1,0 +1,33 @@
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.title button {
+  margin-left: auto;
+}
+
+.items {
+  margin: 15px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  padding: 10px;
+  margin: 0 -10px;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.item:hover {
+  background-color: #e3ebf3;
+}
+
+.itemActive {
+  pointer-events: none;
+  background-color: #cad5de;
+}
