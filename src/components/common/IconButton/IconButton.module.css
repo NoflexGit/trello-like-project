@@ -1,0 +1,21 @@
+.button {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 5px;
+  margin: 0;
+  border: 0;
+  border-radius: 3px;
+}
+
+.button:hover {
+  background-color: #efefef;
+}
+
+/*.button svg {*/
+/*    background-color: ;*/
+/*}*/

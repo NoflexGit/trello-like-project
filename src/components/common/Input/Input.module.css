@@ -1,0 +1,30 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.input {
+  font-weight: 500;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #bac2c5;
+  font-size: 13px;
+  color: #575757;
+}
+
+.input:hover {
+  border-color: #9da5a8;
+}
+
+.input:focus {
+  border-color: #82878c;
+}
