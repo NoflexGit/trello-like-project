@@ -7,23 +7,25 @@ import IconButton from "../common/IconButton";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import Modal from "../common/Modal";
 import Input from "../common/Input";
+import useStore from "../../hooks/useStore";
+import {setActiveBoard} from "../../contexts/actions";
 
 interface IProps {}
 
 const BoardsList: FC<IProps> = () => {
-  const [boards, setBoards] = useLocalStorage<IBoardData>("boards", {});
+  const { state, dispatch } = useStore();
   const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
   const [newBoardName, setNewBoardName] = useState<string>("");
-  const [activeBoard, setActiveBoard] = useState<string | null>(null);
+  const { boards, activeBoard } = state;
 
   useEffect(() => {
     const keys = Object.keys(boards);
     if (keys.length > 0) {
       if (!activeBoard) {
-        setActiveBoard(keys[0]);
+        setActiveBoard(dispatch, keys[0]);
       }
     }
-  }, [boards, activeBoard]);
+  }, [boards, activeBoard, dispatch]);
 
   const openAddModal = useCallback(() => {
     setIsAddOpen(true);
@@ -40,9 +42,8 @@ const BoardsList: FC<IProps> = () => {
       title: newBoardName,
       columns: [],
     };
-    setBoards(boards);
     setNewBoardName("");
-  }, [newBoardName, boards, setBoards]);
+  }, [newBoardName, boards]);
 
   const handleNameInputChange = useCallback((e) => {
     setNewBoardName(e.target.value);
@@ -57,7 +58,7 @@ const BoardsList: FC<IProps> = () => {
       <ul className={styles.items}>
         {Object.keys(boards).map((key) => (
           <li
-            onClick={() => setActiveBoard(key)}
+            onClick={() => setActiveBoard(dispatch, key)}
             key={key}
             className={cx(
               styles.item,
