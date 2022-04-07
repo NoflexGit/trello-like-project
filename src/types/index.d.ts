@@ -16,7 +16,7 @@ interface IColumnData {
 interface ICardData {
   [key: string]: {
     title: string;
-    description: string[];
+    content: string;
     column: string;
   };
 }

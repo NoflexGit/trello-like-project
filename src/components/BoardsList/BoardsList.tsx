@@ -1,14 +1,12 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { nanoid } from "nanoid";
 import styles from "./BoardsList.module.css";
 import cx from "classnames";
 import { ReactComponent as SmallPlusSvg } from "../../assets/icons/small-plus.svg";
 import IconButton from "../common/IconButton";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import Modal from "../common/Modal";
 import Input from "../common/Input";
 import useStore from "../../hooks/useStore";
-import {setActiveBoard} from "../../contexts/actions";
+import {addBoard, setActiveBoard} from "../../contexts/actions";
 
 interface IProps {}
 
@@ -37,13 +35,9 @@ const BoardsList: FC<IProps> = () => {
   }, []);
 
   const handleCreateNewBoard = useCallback(() => {
-    const id = nanoid(8);
-    boards[id] = {
-      title: newBoardName,
-      columns: [],
-    };
+    addBoard(state.boards, dispatch, newBoardName)
     setNewBoardName("");
-  }, [newBoardName, boards]);
+  }, [state.boards, newBoardName, dispatch]);
 
   const handleNameInputChange = useCallback((e) => {
     setNewBoardName(e.target.value);

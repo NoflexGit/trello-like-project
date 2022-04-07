@@ -1,73 +1,56 @@
-import React, { FC, useCallback, useState } from "react";
-import cx from "classnames";
+import React, { FC, useMemo } from 'react';
+import cx from 'classnames';
 
-import Card from "../Card";
-import Button from "../common/Button";
-import IconButton from "../common/IconButton";
-import Modal from "../common/Modal";
-import Input from "../common/Input";
-import Textarea from "../common/Textarea";
-import { ReactComponent as EditSvg } from "../../assets/icons/edit.svg";
-import styles from "./Column.module.css";
+import Card from '../Card';
+import IconButton from '../common/IconButton';
+import { ReactComponent as EditSvg } from '../../assets/icons/edit.svg';
+import styles from './Column.module.css';
+import useStore from '../../hooks/useStore';
+import NewCardButton from "../NewCardButton";
 
 interface IProps {
   className?: string;
+  title: string;
+  id: string;
 }
 
-const Column: FC<IProps> = ({ className }) => {
-  const [isAddOpen, setIsAddOpen] = useState(false);
+const Column: FC<IProps> = ({ className, title, id }) => {
+  const { state } = useStore();
+  const { cards } = state;
 
-  const openAddModal = useCallback(() => {
-    setIsAddOpen(true);
-  }, [setIsAddOpen]);
-
-  const closeAddModal = useCallback(() => {
-    setIsAddOpen(false);
-  }, [setIsAddOpen]);
-
+  const cardsList = useMemo(() => {
+    const result: any[] = [];
+    Object.keys(cards).forEach((key) => {
+      if (cards[key].column === id) {
+        result.push({ ...cards[key], id: key });
+      }
+    });
+    return result;
+  }, [cards, id]);
+  
   return (
     <section className={cx(styles.column, className)}>
       <div className={styles.toggleEdit}>
         <IconButton icon={<EditSvg />} />
       </div>
-      <header className={styles.title}>Top secret</header>
-      <div className={styles.addButton} onClick={openAddModal}>
-        <Button view="transparent">Add new card</Button>
+      <header className={styles.title}>{title}</header>
+      <div className={styles.addButton}>
+        <NewCardButton id={id}/>
       </div>
-      <div className={styles.contentWrapper}>
-        <div className={styles.content}>
-          <Card
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex odio, tempus quis placerat ac, interdum non velit."
-            className={styles.card}
-          />
-          <Card
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex odio, tempus quis placerat ac, interdum non velit."
-            className={styles.card}
-          />
-          <Card
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex odio, tempus quis placerat ac, interdum non velit."
-            className={styles.card}
-          />
-          <Card
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ex odio, tempus quis placerat ac, interdum non velit."
-            className={styles.card}
-          />
+      {cardsList.length > 0 && (
+        <div className={styles.contentWrapper}>
+          <div className={styles.content}>
+            {cardsList.map((card) => (
+              <Card
+                key={card.id}
+                title={card.title}
+                content={card.content}
+                className={styles.card}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      <Modal
-        isOpen={isAddOpen}
-        handleHide={closeAddModal}
-        handleSubmit={() => {}}
-        title="Add new card"
-      >
-        <Input
-          placeholder="Specify the title"
-          label="Title"
-          className={styles.addNewCardInput}
-          maxLength={50}
-        />
-        <Textarea placeholder="Specify the description" label="Description" />
-      </Modal>
+      )}
     </section>
   );
 };

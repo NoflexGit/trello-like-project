@@ -11,9 +11,10 @@ import useOnClickOutside from "../../hooks/useClickOutside";
 interface IProps {
   className?: string;
   content: string;
+  title?: string;
 }
 
-const Card: FC<IProps> = ({ content, className }) => {
+const Card: FC<IProps> = ({ content, className, title }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isMoveOpen, setIsMoveOpen] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -59,7 +60,7 @@ const Card: FC<IProps> = ({ content, className }) => {
         <div className={styles.menuToggle}>
           <IconButton icon={<DotsSvg />} onClick={toggleMenu} />
         </div>
-        <header className={styles.header}>Test header</header>
+        {title && <header className={styles.header}>{title}</header>}
         <p className={styles.text}>{content}</p>
       </div>
       <Modal

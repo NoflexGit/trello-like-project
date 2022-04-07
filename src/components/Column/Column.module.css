@@ -51,11 +51,3 @@
 .card:last-of-type {
   margin-bottom: 0;
 }
-
-.addButton {
-  margin-bottom: 10px;
-}
-
-.addNewCardInput {
-  margin-bottom: 20px;
-}
