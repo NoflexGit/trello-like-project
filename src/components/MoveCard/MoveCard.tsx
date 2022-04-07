@@ -13,16 +13,20 @@ interface IProps {
 const MoveCard: FC<IProps> = ({ id }) => {
   const { state, dispatch } = useStore();
   const { isOpen, handleOpen, handleClose } = useModal();
-  const { columns, activeBoard } = state;
-  const [targetColumn, setTargetColumn] = useState(id);
+  const { columns, activeBoard, cards } = state;
+  const [targetColumn, setTargetColumn] = useState('');
 
   const columnsSelectOptions = useMemo(() => {
-    const sameBoardColumns = Object.keys(columns).filter((key) => columns[key].board === activeBoard)
-    
-    return sameBoardColumns.map((key) => {
+    const sameBoardColumns = Object.keys(columns).filter(
+      (key) => columns[key].board === activeBoard && key !== cards[id].column,
+    );
+
+    const result = sameBoardColumns.map((key) => {
       return { value: key, text: columns[key].title };
     });
-  }, [activeBoard, columns]);
+
+    return [{ value: '', text: 'Select column' }, ...result];
+  }, [activeBoard, columns, cards, id]);
 
   const handleChange = useCallback(({ target: { name, value } }) => {
     setTargetColumn(value);
@@ -39,7 +43,12 @@ const MoveCard: FC<IProps> = ({ id }) => {
         Move
       </Button>
       <Modal isOpen={isOpen} handleHide={handleClose} title="Move card" handleSubmit={handleSave}>
-        <Select options={columnsSelectOptions} onChange={handleChange} value={targetColumn} label="Select a column"/>
+        <Select
+          options={columnsSelectOptions}
+          onChange={handleChange}
+          value={targetColumn}
+          label="Select a column"
+        />
       </Modal>
     </>
   );

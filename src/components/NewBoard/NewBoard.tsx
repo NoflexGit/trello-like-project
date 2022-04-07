@@ -1,18 +1,18 @@
-import React, {FC, useCallback, useState} from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { addBoard } from '../../contexts/actions';
 import { ReactComponent as SmallPlusSvg } from '../../assets/icons/small-plus.svg';
 import IconButton from '../common/IconButton';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
-import useStore from "../../hooks/useStore";
+import useStore from '../../hooks/useStore';
 
 interface IProps {}
 
-const NewBoardButton: FC<IProps> = () => {
+const NewBoard: FC<IProps> = () => {
   const { state, dispatch } = useStore();
   const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
-  const [newBoardName, setNewBoardName] = useState<string>("");
-  
+  const [newBoardName, setNewBoardName] = useState<string>('');
+
   const openAddModal = useCallback(() => {
     setIsAddOpen(true);
   }, []);
@@ -50,4 +50,4 @@ const NewBoardButton: FC<IProps> = () => {
   );
 };
 
-export default NewBoardButton;
+export default NewBoard;

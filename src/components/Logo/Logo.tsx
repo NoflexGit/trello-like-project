@@ -1,9 +1,7 @@
-import React, { FC } from "react";
-import styles from "./Logo.module.css";
+import React, { FC } from 'react';
+import styles from './Logo.module.css';
 
-interface IProps {}
-
-const Logo: FC<IProps> = () => {
+const Logo: FC = () => {
   return <div className={styles.logo}>Boardix</div>;
 };
 

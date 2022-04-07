@@ -1,12 +1,13 @@
 import React, { FC, useMemo } from 'react';
 import cx from 'classnames';
-
 import Card from '../Card';
-import IconButton from '../common/IconButton';
-import { ReactComponent as EditSvg } from '../../assets/icons/edit.svg';
 import styles from './Column.module.css';
 import useStore from '../../hooks/useStore';
-import NewCardButton from "../NewCardButton";
+import NewCard from '../NewCard';
+
+interface ICardWithID extends ICard {
+  id: string;
+}
 
 interface IProps {
   className?: string;
@@ -19,7 +20,7 @@ const Column: FC<IProps> = ({ className, title, id }) => {
   const { cards } = state;
 
   const cardsList = useMemo(() => {
-    const result: any[] = [];
+    const result: ICardWithID[] = [];
     Object.keys(cards).forEach((key) => {
       if (cards[key].column === id) {
         result.push({ ...cards[key], id: key });
@@ -27,15 +28,12 @@ const Column: FC<IProps> = ({ className, title, id }) => {
     });
     return result;
   }, [cards, id]);
-  
+
   return (
     <section className={cx(styles.column, className)}>
-      <div className={styles.toggleEdit}>
-        <IconButton icon={<EditSvg />} />
-      </div>
       <header className={styles.title}>{title}</header>
       <div className={styles.addButton}>
-        <NewCardButton id={id}/>
+        <NewCard id={id} />
       </div>
       {cardsList.length > 0 && (
         <div className={styles.contentWrapper}>

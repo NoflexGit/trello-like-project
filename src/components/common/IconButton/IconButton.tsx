@@ -1,6 +1,6 @@
-import React, { FC, ReactNode } from "react";
-import cx from "classnames";
-import styles from "./IconButton.module.css";
+import React, { FC, ReactNode } from 'react';
+import cx from 'classnames';
+import styles from './IconButton.module.css';
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;

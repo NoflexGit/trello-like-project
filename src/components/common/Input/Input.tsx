@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import cx from "classnames";
-import styles from "./Input.module.css";
+import React, { FC } from 'react';
+import cx from 'classnames';
+import styles from './Input.module.css';
 
 interface IProps extends React.InputHTMLAttributes<any> {
   label?: string;

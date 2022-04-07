@@ -1,15 +1,12 @@
-import React, { FC, useEffect} from "react";
-import styles from "./BoardsList.module.css";
-import cx from "classnames";
-import useStore from "../../hooks/useStore";
-import {setActiveBoard} from "../../contexts/actions";
-import NewBoardButton from "../NewBoardButton";
+import React, { FC, useEffect } from 'react';
+import styles from './BoardsList.module.css';
+import cx from 'classnames';
+import useStore from '../../hooks/useStore';
+import { setActiveBoard } from '../../contexts/actions';
+import NewBoard from '../NewBoard';
 
-interface IProps {}
-
-const BoardsList: FC<IProps> = () => {
+const BoardsList: FC = () => {
   const { state, dispatch } = useStore();
-
   const { boards, activeBoard } = state;
 
   useEffect(() => {
@@ -20,29 +17,23 @@ const BoardsList: FC<IProps> = () => {
       }
     }
   }, [boards, activeBoard, dispatch]);
-  
 
   return (
     <>
       <div className={styles.title}>
         Your boards
-        <NewBoardButton />
+        <NewBoard />
       </div>
       <ul className={styles.items}>
         {Object.keys(boards).map((key) => (
           <li
             onClick={() => setActiveBoard(dispatch, key)}
             key={key}
-            className={cx(
-              styles.item,
-              activeBoard === key && styles.itemActive
-            )}
-          >
+            className={cx(styles.item, activeBoard === key && styles.itemActive)}>
             {boards[key].title}
           </li>
         ))}
       </ul>
-     
     </>
   );
 };

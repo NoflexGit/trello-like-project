@@ -6,15 +6,15 @@ import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Textarea from '../common/Textarea';
 import { editCard } from '../../contexts/actions';
-import useStore from "../../hooks/useStore";
+import useStore from '../../hooks/useStore';
 
 interface IProps {
   content?: string;
   title?: string;
-  id: string
+  id: string;
 }
 
-const EditCard: FC<IProps> = ({ content = '', title= '', id }) => {
+const EditCard: FC<IProps> = ({ content = '', title = '', id }) => {
   const { state, dispatch } = useStore();
   const { isOpen, handleOpen, handleClose } = useModal();
   const [values, setValues] = useState({ content, title });
@@ -25,13 +25,10 @@ const EditCard: FC<IProps> = ({ content = '', title= '', id }) => {
     },
     [values],
   );
-  
-  const handleSave = useCallback(
-      () => {
-        editCard(dispatch, state.cards, id, values)
-      },
-      [dispatch, values, id, state.cards],
-  );
+
+  const handleSave = useCallback(() => {
+    editCard(dispatch, state.cards, id, values);
+  }, [dispatch, values, id, state.cards]);
 
   return (
     <>

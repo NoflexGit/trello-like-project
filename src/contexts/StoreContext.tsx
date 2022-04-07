@@ -1,49 +1,57 @@
 import React, { createContext, useMemo, useReducer } from 'react';
-import Storage from "../utils/localStorage";
+import Storage from '../utils/localStorage';
 import {
   ADD_BOARD,
   SET_ACTIVE_BOARD,
   ADD_COLUMN,
-  ADD_CARD, EDIT_CARD
+  SET_DATA,
+  ADD_CARD,
+  EDIT_CARD,
 } from './actionTypes';
 
 export const storeReducer = (state: IStoreState, { type, payload }: IAction) => {
   switch (type) {
+    case SET_DATA: {
+      return {
+        ...state,
+        ...payload.data,
+      };
+    }
     case SET_ACTIVE_BOARD: {
       return {
         ...state,
-        activeBoard: payload.id
+        activeBoard: payload.id,
       };
     }
     case ADD_BOARD: {
       return {
         ...state,
-        boards: {...state.boards, ...payload.board}
+        boards: { ...state.boards, ...payload.board },
       };
     }
     case ADD_COLUMN: {
       return {
         ...state,
-        columns: {...state.columns, ...payload.column}
+        columns: { ...state.columns, ...payload.column },
       };
     }
     case ADD_CARD: {
       return {
         ...state,
-        cards: {...state.cards, ...payload.card}
+        cards: { ...state.cards, ...payload.card },
       };
     }
     case EDIT_CARD: {
-      const id = payload.id
+      const id = payload.id;
       return {
         ...state,
         cards: {
           ...state.cards,
           [id]: {
             ...state.cards[id],
-            ...payload.params
-          }
-        }
+            ...payload.params,
+          },
+        },
       };
     }
     default: {
@@ -61,7 +69,7 @@ const StoreProvider: React.FC = ({ children }) => {
     boards: Storage.load('boards', {}),
     cards: Storage.load('cards', {}),
     columns: Storage.load('columns', {}),
-    activeBoard: Storage.load('activeBoard', '')
+    activeBoard: Storage.load('activeBoard', ''),
   });
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 

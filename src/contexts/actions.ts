@@ -1,6 +1,14 @@
 import { nanoid } from 'nanoid';
-import { ADD_BOARD, ADD_COLUMN, SET_ACTIVE_BOARD, ADD_CARD, EDIT_CARD } from './actionTypes';
+import {
+  ADD_BOARD,
+  ADD_COLUMN,
+  SET_ACTIVE_BOARD,
+  ADD_CARD,
+  EDIT_CARD,
+  SET_DATA,
+} from './actionTypes';
 import Storage from '../utils/localStorage';
+import data from '../mocks/mockData';
 
 export const setActiveBoard = (dispatch: IDispatch, id: string) => {
   dispatch({
@@ -80,4 +88,14 @@ export const editCard = (
     payload: { id, params },
   });
   Storage.save('cards', { ...cards, [id]: { ...cards[id], ...params } });
+};
+
+export const generateDataFromMock = (dispatch: IDispatch) => {
+  dispatch({
+    type: SET_DATA,
+    payload: { data },
+  });
+  for (let key in data) {
+    Storage.save(key, data[key]);
+  }
 };

@@ -1,17 +1,17 @@
-import React from "react";
-import cx from "classnames";
-import styles from "./Button.module.css";
+import React from 'react';
+import cx from 'classnames';
+import styles from './Button.module.css';
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  view?: "default" | "action" | "danger" | "transparent";
-  size?: "small" | "medium";
+  view?: 'default' | 'action' | 'danger' | 'transparent';
+  size?: 'small' | 'medium';
 }
 
 const Button: React.FC<IProps> = ({
-  type = "button",
-  view = "default",
-  size = "medium",
+  type = 'button',
+  view = 'default',
+  size = 'medium',
   children,
   className,
   disabled,
@@ -22,7 +22,7 @@ const Button: React.FC<IProps> = ({
     styles[view],
     styles[size],
     disabled && styles.disabled,
-    className
+    className,
   );
 
   return (
