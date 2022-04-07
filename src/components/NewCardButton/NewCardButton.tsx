@@ -11,7 +11,7 @@ interface IProps {
   id: string;
 }
 
-const cardInititalState = {
+const valuesInititalState = {
   name: '',
   content: '',
 }
@@ -19,20 +19,20 @@ const cardInititalState = {
 const NewCardButton: FC<IProps> = ({id}) => {
   const { state, dispatch } = useStore();
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [newCard, setNewCard] = useState(cardInititalState);
+  const [values, setValues] = useState(valuesInititalState);
   const { cards }  = state;
   
   const handleChangeValue = useCallback(
       ({ target: { name, value } }) => {
-        setNewCard({ ...newCard, [name]: value });
+        setValues({ ...values, [name]: value });
       },
-      [newCard],
+      [values],
   );
   
   const createCard = useCallback(() => {
-    addCard(dispatch, cards, id, newCard.name, newCard.content);
-    setNewCard(cardInititalState)
-  }, [dispatch, cards, id, newCard]);
+    addCard(dispatch, cards, id, values.name, values.content);
+    setValues(valuesInititalState)
+  }, [dispatch, cards, id, values]);
   
   const openAddModal = useCallback(() => {
     setIsAddOpen(true);

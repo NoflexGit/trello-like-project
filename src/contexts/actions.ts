@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { ADD_BOARD, ADD_COLUMN, SET_ACTIVE_BOARD, ADD_CARD } from './actionTypes';
+import { ADD_BOARD, ADD_COLUMN, SET_ACTIVE_BOARD, ADD_CARD, EDIT_CARD } from './actionTypes';
 import Storage from '../utils/localStorage';
 
 export const setActiveBoard = (dispatch: IDispatch, id: string) => {
@@ -14,7 +14,6 @@ export const addBoard = (boards: IBoardData, dispatch: IDispatch, title: string)
   const id = nanoid(8);
   const board: IBoardData = {
     [id]: {
-      columns: [],
       title,
     },
   };
@@ -23,9 +22,8 @@ export const addBoard = (boards: IBoardData, dispatch: IDispatch, title: string)
     type: ADD_BOARD,
     payload: { board },
   });
-  
-  setActiveBoard(dispatch,id)
 
+  setActiveBoard(dispatch, id);
   Storage.save('boards', { ...boards, ...board });
 };
 
@@ -33,7 +31,6 @@ export const addColumn = (dispatch: IDispatch, state: IStoreState, title: string
   const id = nanoid(8);
   const column: IColumnData = {
     [id]: {
-      cards: [],
       title,
       board: state.activeBoard,
     },
@@ -55,7 +52,7 @@ export const addCard = (
   content: string,
 ) => {
   const id = nanoid(8);
-  console.log(columnId)
+
   const card: ICardData = {
     [id]: {
       title,
@@ -70,4 +67,17 @@ export const addCard = (
   });
 
   Storage.save('cards', { ...cards, ...card });
+};
+
+export const editCard = (
+  dispatch: IDispatch,
+  cards: ICardData,
+  id: string,
+  params: Record<string, string>,
+) => {
+  dispatch({
+    type: EDIT_CARD,
+    payload: { id, params },
+  });
+  Storage.save('cards', { ...cards, [id]: { ...cards[id], ...params } });
 };

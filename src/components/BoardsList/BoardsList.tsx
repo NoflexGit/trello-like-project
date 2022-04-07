@@ -1,19 +1,15 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useEffect} from "react";
 import styles from "./BoardsList.module.css";
 import cx from "classnames";
-import { ReactComponent as SmallPlusSvg } from "../../assets/icons/small-plus.svg";
-import IconButton from "../common/IconButton";
-import Modal from "../common/Modal";
-import Input from "../common/Input";
 import useStore from "../../hooks/useStore";
-import {addBoard, setActiveBoard} from "../../contexts/actions";
+import {setActiveBoard} from "../../contexts/actions";
+import NewBoardButton from "../NewBoardButton";
 
 interface IProps {}
 
 const BoardsList: FC<IProps> = () => {
   const { state, dispatch } = useStore();
-  const [isAddOpen, setIsAddOpen] = useState<boolean>(false);
-  const [newBoardName, setNewBoardName] = useState<string>("");
+
   const { boards, activeBoard } = state;
 
   useEffect(() => {
@@ -24,30 +20,13 @@ const BoardsList: FC<IProps> = () => {
       }
     }
   }, [boards, activeBoard, dispatch]);
-
-  const openAddModal = useCallback(() => {
-    setIsAddOpen(true);
-  }, []);
-
-  const closeAddModal = useCallback(() => {
-    setIsAddOpen(false);
-    setNewBoardName("");
-  }, []);
-
-  const handleCreateNewBoard = useCallback(() => {
-    addBoard(state.boards, dispatch, newBoardName)
-    setNewBoardName("");
-  }, [state.boards, newBoardName, dispatch]);
-
-  const handleNameInputChange = useCallback((e) => {
-    setNewBoardName(e.target.value);
-  }, []);
+  
 
   return (
     <>
       <div className={styles.title}>
         Your boards
-        <IconButton onClick={openAddModal} icon={<SmallPlusSvg />} />
+        <NewBoardButton />
       </div>
       <ul className={styles.items}>
         {Object.keys(boards).map((key) => (
@@ -63,20 +42,7 @@ const BoardsList: FC<IProps> = () => {
           </li>
         ))}
       </ul>
-      <Modal
-        isOpen={isAddOpen}
-        handleHide={closeAddModal}
-        handleSubmit={handleCreateNewBoard}
-        title="Create new board"
-        submitDisabled={newBoardName === ""}
-      >
-        <Input
-          label="Name"
-          placeholder="Enter board name"
-          value={newBoardName}
-          onChange={handleNameInputChange}
-        />
-      </Modal>
+     
     </>
   );
 };

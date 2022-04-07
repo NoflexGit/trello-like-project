@@ -4,7 +4,7 @@ import {
   ADD_BOARD,
   SET_ACTIVE_BOARD,
   ADD_COLUMN,
-  ADD_CARD
+  ADD_CARD, EDIT_CARD
 } from './actionTypes';
 
 export const storeReducer = (state: IStoreState, { type, payload }: IAction) => {
@@ -31,6 +31,19 @@ export const storeReducer = (state: IStoreState, { type, payload }: IAction) => 
       return {
         ...state,
         cards: {...state.cards, ...payload.card}
+      };
+    }
+    case EDIT_CARD: {
+      const id = payload.id
+      return {
+        ...state,
+        cards: {
+          ...state.cards,
+          [id]: {
+            ...state.cards[id],
+            ...payload.params
+          }
+        }
       };
     }
     default: {

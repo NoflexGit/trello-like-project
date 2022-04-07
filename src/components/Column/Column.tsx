@@ -46,6 +46,7 @@ const Column: FC<IProps> = ({ className, title, id }) => {
                 title={card.title}
                 content={card.content}
                 className={styles.card}
+                id={card.id}
               />
             ))}
           </div>
